@@ -1,7 +1,12 @@
 ## Description
 
 Online step by step learning of [Nest](https://github.com/nestjs/nest) framework with TypeScript.
+ ## Course Summary
 
+Part 1
+- branch name:  part-1
+- blog link: https://dev.to/sifatul/nestjs-course-user-management-part-1-12jm
+- Topic: Project initializing, Routing with controllers
 ## Installation
 
 ```bash
@@ -21,12 +26,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
  
- ## Course Summary
 
-Part 1
-- branch:  part-1
-- Project initializing
-- Routing or controller
 
 ## License
 
