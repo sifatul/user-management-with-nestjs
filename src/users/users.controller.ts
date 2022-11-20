@@ -1,58 +1,51 @@
 import { Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
-
-let sampleUsers = [{
-  id: 1,
-  name: 'user1',
-  email: 'user1@email.com'
-}]
+import { Users } from './users.interface';
+import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
+  constructor(private usersServices: UsersService) {}
   @Get()
-  findAll() {
-    return sampleUsers
+  findAll() : Users []{
+    return this.usersServices.findAll()
   }
   @Get(':id')
-  findOne(@Param() params) {
+  findOne(@Param() params) : Users{
     const id = params.id
-    return sampleUsers.find(user => user.id === id)
+    return this.usersServices.findOne(id)
   }
   @Post()
-  createOne() {
+  createOne() : Users []{
     const paramsBody = {
       id: 2,
       name: 'user2',
       email: 'user2@email.com'
 
     }
-    sampleUsers.push(paramsBody)
-    return sampleUsers
+    this.usersServices.create(paramsBody)
+    return this.usersServices.findAll() // return the updated list
   }
   @Put(':id')
-  updateOne(@Param() params) {
+  updateOne(@Param() params) : Users {
     const id = params.id
     const paramsBody = {
       id: id,
       name: 'updatedUser',
       email: 'email-updated@email.com'
     }
-    const indexOfUser = sampleUsers.findIndex(item => item.id === id)
-    sampleUsers[indexOfUser] = paramsBody
-    return sampleUsers[indexOfUser]
+    this.usersServices.updateOne(id, paramsBody)
+    return paramsBody
   }
   @Patch(':id')
-  updateOnePartly(@Param() params) {
+  updateOnePartly(@Param() params) : Users {
     const id = params.id
     const paramsBody = {
       email: 'email-update-only@email.com'
     }
-    const indexOfUser = sampleUsers.findIndex(item => item.id === id)
-    sampleUsers[indexOfUser].email = paramsBody.email
-    return sampleUsers[indexOfUser]
+    return this.usersServices.updateOnePartially(id, paramsBody.email)
   }
   @Delete(':id')
-  deleteOne(@Param() params) {
+  deleteOne(@Param() params) : Users []{
     const id = params.id
-    sampleUsers = sampleUsers.filter(user => user.id === id)
-    return sampleUsers
+    return this.usersServices.delete(id)
   }
 }
